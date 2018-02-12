@@ -1,5 +1,19 @@
 # MaterialList [![Build Status](https://travis-ci.org/dexafree/MaterialList.svg?branch=master)](https://travis-ci.org/dexafree/MaterialList) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dexafree/materiallist/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.github.dexafree/materiallist) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialList-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1161)
 
+## Discontinued
+
+This library will not receive any updates, as I do not have the time or knowledge to improve it.
+
+If anyone forks it and wants to mantain it, please let me know and I will add a link to the mantained version.
+
+-----
+
+> ### Warning!
+> MaterialList v3 changes the way Cards are built, and its API is not backwards compatible.
+> Read the changes and learn how to build your cards in the Wiki.
+> 
+> Also the v3 version should be considered experimental
+
 MaterialList is an Android library created to help all Android developers get the beautiful CardViews that Google shows at its [official design specifications](http://www.google.com/design/spec/components/cards.html#cards-usage).
 
 Provided as a RecyclerView extension, it can receive a list of Cards (stored in a CardList, provided by the library) and show them accordingly to the android style and design patterns.
@@ -70,12 +84,16 @@ MaterialListView mListView = (MaterialListView) findViewById(R.id.material_listv
 ### 3. Step: Add Cards to the MaterialListView
 
 ```java
-SmallImageCard card = new SmallImageCard(context);
-card.setDescription(description);
-card.setTitle(title);
-card.setDrawable(R.drawable.ic_launcher);
+Card card = new Card.Builder(this)
+                            .setTag("BASIC_IMAGE_BUTTONS_CARD")
+                            .withProvider(BasicImageButtonsCardProvider.class)
+                            .setTitle("I'm new")
+                            .setDescription("I've been generated on runtime!")
+                            .setDrawable(R.drawable.dog)
+                            .endConfig()
+                            .build()
 
-mListView.add(card);
+mListView.getAdapter.add(card);
 ```
 
 There are also some Cards that may show a Divider between the content and the buttons. For further reference, [read the Wiki page](https://github.com/dexafree/MaterialList/wiki/Dividers)
@@ -89,13 +107,13 @@ Since version 2.4.0, you can add your listeners
 mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
 
     @Override
-    public void onItemClick(CardItemView view, int position) {
-        Log.d("CARD_TYPE", view.getTag().toString());
+    public void onItemClick(Card card, int position) {
+        Log.d("CARD_TYPE", card.getTag().toString());
     }
 
     @Override
-    public void onItemLongClick(CardItemView view, int position) {
-        Log.d("LONG_CLICK", view.getTag().toString());
+    public void onItemLongClick(Card card, int position) {
+        Log.d("LONG_CLICK", card.getTag().toString());
     }
 });
 ```
@@ -114,9 +132,7 @@ mListView.setOnDismissCallback(new OnDismissCallback() {
     }
 });
 ```
-You will also be able to decide if a card should be dismissible or not, just by calling Card.setCanDismiss().
-
-Also, in case you wanted to dismiss your Card by code, you would only need to call `card.dismiss()`, and it will dismiss seamlessly.
+You will also be able to decide if a card should be dismissible or not, just by calling `card.setDismissible(true)`.
 
 Check also the **Recovering data from the cards** section in order to be able to recover the Card's content
 
@@ -146,7 +162,7 @@ In order to use MaterialList, you can either clone the project and import it as 
 ```groovy
 dependencies {
     ...
-    compile 'com.github.dexafree:materiallist:2.4.3'
+    compile 'com.github.dexafree:materiallist:3.2.2'
 }
 ```
 
@@ -164,8 +180,6 @@ You can clone the project and compile it yourself (it includes a sample), or you
 ## Credits
 * Jake Wharton: [SwipeToDismissNOA](https://github.com/JakeWharton/SwipeToDismissNOA)
 * Romain Guy: The sand picture provided as example was taken from one of his projects
-* Niek Haarman: [ListViewAnimations](https://github.com/nhaarman/ListViewAnimations)
-* Square: [Otto](https://github.com/square/otto)
 
 ## License
 
